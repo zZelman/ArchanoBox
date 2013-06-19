@@ -1,0 +1,3 @@
+error C2381: 'exit' : redefinition; __declspec(noreturn) differs C:\Program Files\Microsoft Visual Studio 8\VC\include\GL/glut.h(146) : see declaration of 'exit'
+it is the second answer
+http://social.msdn.microsoft.com/Forums/en-US/4cf463c1-5fee-4daa-b135-be8b06ab7f8f/error-c2381-exit-redefinition-declspecnoreturn-differs
