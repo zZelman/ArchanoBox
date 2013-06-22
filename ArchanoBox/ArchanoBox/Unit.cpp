@@ -31,7 +31,7 @@ Unit::Unit(GLfloat grid_x, GLfloat grid_y, GLfloat grid_z,
            std::vector<Tile*> tVector,
            GLint teamID,
            GLfloat* color)
-	: Piece::Piece(grid_x, grid_y, grid_z,
+	: Piece(grid_x, grid_y, grid_z,
 	               health,
 	               movementPoints,
 	               damage, damage_range,

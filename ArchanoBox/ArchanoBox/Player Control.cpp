@@ -8,6 +8,7 @@
 #include <cmath>
 #include <math.h>
 #include <vector>
+#include <memory>
 
 #include "Player Control.h"
 #include "Camera.h"
@@ -22,10 +23,13 @@ extern GLint window_width;
 extern GLint window_height;
 extern GLfloat viewPlane_close;
 extern GLfloat viewPlane_far;
-extern std::vector<Ray> rayVector;
-extern std::vector<Tile> tileVector;
-extern std::vector<Unit> unitVector_team1;
-extern std::vector<Unit> unitVector_team2;
+typedef std::vector<std::unique_ptr<Ray>> defRayVector;
+extern defRayVector rayVector;
+typedef std::vector<std::unique_ptr<Unit>> defUnitVector;
+extern defUnitVector unitVector_team1;
+extern defUnitVector unitVector_team2;
+typedef std::vector<std::unique_ptr<Tile>> defTileVector;
+extern defTileVector tileVector;
 
 // initializations in State Machine.cpp
 extern Unit* unit_controlled;	// the unit that will move
@@ -151,23 +155,23 @@ void proccess_SpecialKey(int key, int x, int y)
 			//###################
 			if (modKey == (GLUT_ACTIVE_CTRL + GLUT_ACTIVE_ALT)) // move diagonally LR
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
+				for (auto itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
 				{
-					itr->move_Diagonally_LR_up();
+					(*itr)->move_Diagonally_LR_up();
 				}
 			}
 			else if (modKey == (GLUT_ACTIVE_SHIFT + GLUT_ACTIVE_ALT)) // move diagonally RL
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
+				for (auto itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
 				{
-					itr->move_Diagonally_RL_up();
+					(*itr)->move_Diagonally_RL_up();
 				}
 			}
 			else if (modKey == GLUT_ACTIVE_ALT)
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
+				for (auto itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
 				{
-					itr->move_Zneg();
+					(*itr)->move_Zneg();
 				}
 			}
 			//###################
@@ -175,23 +179,23 @@ void proccess_SpecialKey(int key, int x, int y)
 			//###################
 			else if (modKey == GLUT_ACTIVE_CTRL) // move diagonally LR
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
+				for (auto itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
 				{
-					itr->move_Diagonally_LR_up();
+					(*itr)->move_Diagonally_LR_up();
 				}
 			}
 			else if (modKey == GLUT_ACTIVE_SHIFT) // move diagonally RL
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
+				for (auto itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
 				{
-					itr->move_Diagonally_RL_up();
+					(*itr)->move_Diagonally_RL_up();
 				}
 			}
 			else if (modKey != GLUT_ACTIVE_ALT)
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
+				for (auto itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
 				{
-					itr->move_Zneg();
+					(*itr)->move_Zneg();
 				}
 			}
 			break;
@@ -202,23 +206,23 @@ void proccess_SpecialKey(int key, int x, int y)
 			//###################
 			if (modKey == (GLUT_ACTIVE_CTRL + GLUT_ACTIVE_ALT)) // move diagonally LR
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
+				for (auto itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
 				{
-					itr->move_Diagonally_LR_down();
+					(*itr)->move_Diagonally_LR_down();
 				}
 			}
 			else if (modKey == (GLUT_ACTIVE_SHIFT + GLUT_ACTIVE_ALT)) // move diagonally RL
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
+				for (auto itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
 				{
-					itr->move_Diagonally_RL_down();
+					(*itr)->move_Diagonally_RL_down();
 				}
 			}
 			else if (modKey == GLUT_ACTIVE_ALT)
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
+				for (auto itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
 				{
-					itr->move_Zpos();
+					(*itr)->move_Zpos();
 				}
 			}
 			//###################
@@ -226,23 +230,23 @@ void proccess_SpecialKey(int key, int x, int y)
 			//###################
 			else if (modKey == GLUT_ACTIVE_CTRL) // move diagonally LR
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
+				for (auto itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
 				{
-					itr->move_Diagonally_LR_down();
+					(*itr)->move_Diagonally_LR_down();
 				}
 			}
 			else if (modKey == GLUT_ACTIVE_SHIFT) // move diagonally RL
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
+				for (auto itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
 				{
-					itr->move_Diagonally_RL_down();
+					(*itr)->move_Diagonally_RL_down();
 				}
 			}
 			else if (modKey != GLUT_ACTIVE_ALT)
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
+				for (auto itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
 				{
-					itr->move_Zpos();
+					(*itr)->move_Zpos();
 				}
 			}
 			break;
@@ -253,9 +257,9 @@ void proccess_SpecialKey(int key, int x, int y)
 			//###################
 			if (modKey != GLUT_ACTIVE_ALT)
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
+				for (auto itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
 				{
-					itr->move_Xneg();
+					(*itr)->move_Xneg();
 				}
 			}
 
@@ -264,9 +268,9 @@ void proccess_SpecialKey(int key, int x, int y)
 			//###################
 			if (modKey == GLUT_ACTIVE_ALT)
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
+				for (auto itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
 				{
-					itr->move_Xneg();
+					(*itr)->move_Xneg();
 				}
 			}
 			break;
@@ -277,9 +281,9 @@ void proccess_SpecialKey(int key, int x, int y)
 			//###################
 			if (modKey != GLUT_ACTIVE_ALT)
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
+				for (auto itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
 				{
-					itr->move_Xpos();
+					(*itr)->move_Xpos();
 				}
 			}
 
@@ -288,9 +292,9 @@ void proccess_SpecialKey(int key, int x, int y)
 			//###################
 			if (modKey == GLUT_ACTIVE_ALT)
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
+				for (auto itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
 				{
-					itr->move_Xpos();
+					(*itr)->move_Xpos();
 				}
 			}
 			break;
@@ -301,9 +305,9 @@ void proccess_SpecialKey(int key, int x, int y)
 			//###################
 			if (modKey != GLUT_ACTIVE_ALT)
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
+				for (auto itr = unitVector_team1.begin(); itr != unitVector_team1.end(); ++itr)
 				{
-					itr->printStats();
+					(*itr)->printStats();
 				}
 			}
 
@@ -312,9 +316,9 @@ void proccess_SpecialKey(int key, int x, int y)
 			//###################
 			if (modKey == GLUT_ACTIVE_ALT)
 			{
-				for (std::vector<Unit>::iterator itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
+				for (auto itr = unitVector_team2.begin(); itr != unitVector_team2.end(); ++itr)
 				{
-					itr->printStats();
+					(*itr)->printStats();
 				}
 			}
 			break;
@@ -383,12 +387,12 @@ void proccess_Mouse(int button, int state, int x, int y)
 		//		and the center of the sphere. If that distance is less then the radius of the sphere then we have a hit!
 		// NOTE: all real coding is done in Class Tile (Tile.cpp)
 		std::vector<Tile> tilesSelected; // used for finding the closest tile that the ray has hit
-		for (std::vector<Tile>::iterator itr = tileVector.begin(); itr != tileVector.end(); ++itr)
+		for (auto itr = tileVector.begin(); itr != tileVector.end(); ++itr)
 		{
-			bool hit = itr->intersection(*near, *far);
+			bool hit = (*itr)->intersection(*near, *far);
 			if (hit == true)
 			{
-				tilesSelected.push_back(*itr);
+				tilesSelected.push_back(*(*itr));
 			}
 		}
 
@@ -399,10 +403,10 @@ void proccess_Mouse(int button, int state, int x, int y)
 		Tile* choosenTile = NULL;
 		if (tilesSelected.size() > 1)
 		{
-			for (std::vector<Tile>::iterator itr = tilesSelected.begin(); itr != tilesSelected.end(); ++itr)
+			for (auto itr = tilesSelected.begin(); itr != tilesSelected.end(); ++itr)
 			{
 				// hierarchy: y > dist from camera to tile > everything else
-				for (std::vector<Tile>::iterator itr2 = tilesSelected.begin(); itr2 != tilesSelected.end(); ++itr2)
+				for (auto itr2 = tilesSelected.begin(); itr2 != tilesSelected.end(); ++itr2)
 				{
 					if (itr->equals(*itr2)) // only checks grid coords for equality!
 					{

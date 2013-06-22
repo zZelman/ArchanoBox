@@ -5,14 +5,14 @@
 #include "Primitive Drawing.h"
 
 Tile_Grassland::Tile_Grassland(GLfloat grid_x, GLfloat grid_y, GLfloat grid_z)
-	: Tile::Tile(grid_x, grid_y, grid_z) // call to super contructor
+	: Tile(grid_x, grid_y, grid_z) // call to super contructor
 {
 	this->movementCost 	= 0;
 	this->stats_offence = 0;
 	this->stats_defence = 0;
 }
 
-Tile_Grassland::Tile_Grassland() : Tile::Tile()
+Tile_Grassland::Tile_Grassland() : Tile()
 {
 	std::cout << "Tile_Grassland - default constructor" << std::endl;
 }

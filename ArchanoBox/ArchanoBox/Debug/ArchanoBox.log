@@ -1,32 +1,27 @@
-﻿Build started 6/19/2013 11:35:15 AM.
-     1>Project "C:\Users\DonBot\Documents\Visual Studio 2012\Projects\ArchanoBox\ArchanoBox\ArchanoBox.vcxproj" on node 2 (Build target(s)).
+﻿Build started 6/19/2013 6:30:18 PM.
+     1>Project "C:\Users\DonBot\Documents\Visual Studio 2012\Projects\GitHub ArchanoBox\ArchanoBox\ArchanoBox\ArchanoBox.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /D GLUT_BUILDING_LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt "1 main.cpp" Calculations.cpp Camera.cpp Fonts.cpp HUD.cpp Imageloader.cpp Piece.cpp "Player Control.cpp" "Primitive Drawing.cpp" Ray.cpp "State Machine.cpp" Tile.cpp Tile_Grassland.cpp Unit.cpp Vector3f.cpp
-         Vector3f.cpp
-         Unit.cpp
-     1>c:\users\donbot\documents\visual studio 2012\projects\archanobox\archanobox\unit.cpp(34): error C2039: '{ctor}' : is not a member of 'Piece'
-                 c:\users\donbot\documents\visual studio 2012\projects\archanobox\archanobox\piece.h(10) : see declaration of 'Piece'
-         Tile_Grassland.cpp
-     1>c:\users\donbot\documents\visual studio 2012\projects\archanobox\archanobox\tile_grassland.cpp(8): error C2039: '{ctor}' : is not a member of 'Tile'
-                 c:\users\donbot\documents\visual studio 2012\projects\archanobox\archanobox\tile.h(14) : see declaration of 'Tile'
-     1>c:\users\donbot\documents\visual studio 2012\projects\archanobox\archanobox\tile_grassland.cpp(15): error C2039: '{ctor}' : is not a member of 'Tile'
-                 c:\users\donbot\documents\visual studio 2012\projects\archanobox\archanobox\tile.h(14) : see declaration of 'Tile'
-         Tile.cpp
-         State Machine.cpp
-         Ray.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /D GLUT_BUILDING_LIB /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt "Primitive Drawing.cpp"
          Primitive Drawing.cpp
-         Player Control.cpp
-         Piece.cpp
-         Imageloader.cpp
-         HUD.cpp
-         Fonts.cpp
-     1>c:\users\donbot\documents\visual studio 2012\projects\archanobox\archanobox\fonts.cpp(46): warning C4018: '<' : signed/unsigned mismatch
-         Camera.cpp
-         Calculations.cpp
-         1 main.cpp
-         Generating Code...
-     1>Done Building Project "C:\Users\DonBot\Documents\Visual Studio 2012\Projects\ArchanoBox\ArchanoBox\ArchanoBox.vcxproj" (Build target(s)) -- FAILED.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\DonBot\Documents\Visual Studio 2012\Projects\GitHub ArchanoBox\ArchanoBox\Debug\ArchanoBox.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib opengl32.lib glut32.lib glu32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\DonBot\Documents\Visual Studio 2012\Projects\GitHub ArchanoBox\ArchanoBox\Debug\ArchanoBox.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\DonBot\Documents\Visual Studio 2012\Projects\GitHub ArchanoBox\ArchanoBox\Debug\ArchanoBox.lib" /MACHINE:X86 "Debug\1 main.obj"
+         Debug\Calculations.obj
+         Debug\Camera.obj
+         Debug\Fonts.obj
+         Debug\HUD.obj
+         Debug\Imageloader.obj
+         Debug\Piece.obj
+         "Debug\Player Control.obj"
+         "Debug\Primitive Drawing.obj"
+         Debug\Ray.obj
+         "Debug\State Machine.obj"
+         Debug\Tile.obj
+         Debug\Tile_Grassland.obj
+         Debug\Unit.obj
+         Debug\Vector3f.obj
+         ArchanoBox.vcxproj -> C:\Users\DonBot\Documents\Visual Studio 2012\Projects\GitHub ArchanoBox\ArchanoBox\Debug\ArchanoBox.exe
+     1>Done Building Project "C:\Users\DonBot\Documents\Visual Studio 2012\Projects\GitHub ArchanoBox\ArchanoBox\ArchanoBox\ArchanoBox.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:05.40
+Time Elapsed 00:00:00.73

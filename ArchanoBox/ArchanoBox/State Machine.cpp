@@ -6,17 +6,22 @@
 
 #include <iostream>
 #include <vector>
-#include <stdlib.h> // abs()
-#include <math.h> 	// sqrt()
+#include <stdlib.h>		// abs()
+#include <math.h> 		// sqrt()
 #include <string>
 #include <string.h>
+#include <memory>
+#include <algorithm>	// std::remove_if
 
 #include "State Machine.h"
 #include "Unit.h"
 #include "Tile.h"
 
-extern std::vector<Unit> unitVector_team1;
-extern std::vector<Unit> unitVector_team2;
+typedef std::vector<std::unique_ptr<Unit>> defUnitVector;
+extern defUnitVector unitVector_team1;
+extern defUnitVector unitVector_team2;
+typedef std::vector<std::unique_ptr<Tile>> defTileVector;
+extern defTileVector tileVector;
 
 GLint CURRENT_STATE;	// states are inside of "State machine.h" and const
 Unit* unit_controlled;	// the unit that will move
@@ -33,6 +38,14 @@ bool isUnit_targetSelected 	= false;	// true only when a target is selected
 bool isTileSelected 		= false;	// changed when a unit is already selected, and a tile is then selected again with the mouse
 bool actNow 				= false;	// changes to true when [spacebar] is pressed; describes when an action takes place
 bool isActionAHeal			= false;	// only true when in action state and two units of the same team are selected
+
+// removes all units with health <= 0 from the unit vector
+void remove_dead_units(std::vector<std::unique_ptr<Unit>> &unitVector)
+{
+	auto isDead = [](const std::unique_ptr<Unit> &unit) -> bool { return (unit->getHealth() <= 0); };
+    auto newEnd = std::remove_if(unitVector.begin(), unitVector.end(), isDead);
+    unitVector.erase(newEnd, unitVector.end());
+}
 
 void state_move()
 {
@@ -124,43 +137,18 @@ void state_action()
 
 void state_check_deaths()
 {
-	std::vector<Unit> nonDeadUnits_team1;
-	std::vector<Unit> nonDeadUnits_team2;
+	defUnitVector nonDeadUnits_team1;
+	defUnitVector nonDeadUnits_team2;
 
 	//###################
 	//##### team 1 ######
 	//###################
-	for (std::vector<Unit>::iterator unit = unitVector_team1.begin(); unit != unitVector_team1.end(); ++unit)
-	{
-		if (unit->getHealth() <= 0)
-		{
-			std::cout << "team 1 unit dead" << std::endl;
-		}
-		else
-		{
-			nonDeadUnits_team1.push_back(*unit);
-		}
-	}
+	remove_dead_units(unitVector_team1);
 
 	//###################
 	//##### team 2 ######
 	//###################
-	for (std::vector<Unit>::iterator unit = unitVector_team2.begin(); unit != unitVector_team2.end(); ++unit)
-	{
-		if (unit->getHealth() <= 0)
-		{
-			std::cout << "team 2 unit dead" << std::endl;
-		}
-		else
-		{
-			nonDeadUnits_team2.push_back(*unit);
-		}
-	}
-	// set the unitVectors equal to the alive units
-	unitVector_team1.clear();
-	unitVector_team1 = nonDeadUnits_team1;
-	unitVector_team2.clear();
-	unitVector_team2 = nonDeadUnits_team2;
+	remove_dead_units(unitVector_team2);
 
 	CURRENT_STATE = UPDATE;
 	resetStateVars();
@@ -177,43 +165,18 @@ void state_check_gameOver()
 {
 	//##### FIRST CHECK IF DEBUFS KILLED ANY UNITS ######
 
-	std::vector<Unit> nonDeadUnits_team1;
-	std::vector<Unit> nonDeadUnits_team2;
+	defUnitVector nonDeadUnits_team1;
+	defUnitVector nonDeadUnits_team2;
 
 	//###################
 	//##### team 1 ######
 	//###################
-	for (std::vector<Unit>::iterator unit = unitVector_team1.begin(); unit != unitVector_team1.end(); ++unit)
-	{
-		if (unit->getHealth() <= 0)
-		{
-			std::cout << "team 1 unit dead" << std::endl;
-		}
-		else
-		{
-			nonDeadUnits_team1.push_back(*unit);
-		}
-	}
+	remove_dead_units(unitVector_team1);
 
 	//###################
 	//##### team 2 ######
 	//###################
-	for (std::vector<Unit>::iterator unit = unitVector_team2.begin(); unit != unitVector_team2.end(); ++unit)
-	{
-		if (unit->getHealth() <= 0)
-		{
-			std::cout << "team 2 unit dead" << std::endl;
-		}
-		else
-		{
-			nonDeadUnits_team2.push_back(*unit);
-		}
-	}
-	// set the unitVectors equal to the alive units
-	unitVector_team1.clear();
-	unitVector_team1 = nonDeadUnits_team1;
-	unitVector_team2.clear();
-	unitVector_team2 = nonDeadUnits_team2;
+	remove_dead_units(unitVector_team2);
 
 
 	//#### CHECK GAME OVER CONDITION #####
@@ -359,13 +322,13 @@ void selectionForStates(Tile* selectedTile)
 
 			// search through all units to try and find a match to the tile that was selected by the mouse ray
 			// selecting a team unit results in a heal, even if a value of 0
-			for (std::vector<Unit>::iterator unit = unitVector_team1.begin(); unit != unitVector_team1.end(); ++unit)
+			for (auto unit = unitVector_team1.begin(); unit != unitVector_team1.end(); ++unit)
 			{
-				if (tileCoords_grid->equals(unit->getCoords_grid()) &&
+				if (tileCoords_grid->equals((*unit)->getCoords_grid()) &&
 				        unit_controlled->getIsHealer()) // can only heal if you are marked as a healer unit
 				{
 					// used for state machine
-					unit_target = unit->returnThis();
+					unit_target = (*unit)->returnThis();
 					std::cout << "targeted - heal" << std::endl;
 					isUnit_targetSelected = true;
 					isActionAHeal = true;
@@ -374,18 +337,18 @@ void selectionForStates(Tile* selectedTile)
 			}
 			if (!isUnit_targetSelected) // Cheap performance increase
 			{
-				for (std::vector<Unit>::iterator unit = unitVector_team2.begin(); unit != unitVector_team2.end(); ++unit)
+				for (auto unit = unitVector_team2.begin(); unit != unitVector_team2.end(); ++unit)
 				{
-					if (tileCoords_grid->equals(unit->getCoords_grid()) &&
+					if (tileCoords_grid->equals((*unit)->getCoords_grid()) &&
 					        !unit_controlled->getIsHealer())
 					{
 						// used for state machine
-						unit_target = unit->returnThis();
+						unit_target = (*unit)->returnThis();
 						std::cout << "targeted" << std::endl;
 						isUnit_targetSelected = true;
 						break;
 					}
-					else if (tileCoords_grid->equals(unit->getCoords_grid()) &&
+					else if (tileCoords_grid->equals((*unit)->getCoords_grid()) &&
 					         unit_controlled->getIsHealer())
 					{
 						std::cout << "healers cannot attack" << std::endl;
@@ -399,12 +362,12 @@ void selectionForStates(Tile* selectedTile)
 	else if (!isUnit_controlled)
 	{
 		// search through all units to try and find a match to the tile that was selected by the mouse ray
-		for (std::vector<Unit>::iterator unit = unitVector_team1.begin(); unit != unitVector_team1.end(); ++unit)
+		for (auto unit = unitVector_team1.begin(); unit != unitVector_team1.end(); ++unit)
 		{
-			if (tileCoords_grid->equals(unit->getCoords_grid()))
+			if (tileCoords_grid->equals((*unit)->getCoords_grid()))
 			{
 				// used for state machine
-				unit_controlled = unit->returnThis();
+				unit_controlled = (*unit)->returnThis();
 				std::cout << "State Machine - unit selected" << std::endl;
 				isUnit_controlled = true;
 				break;
