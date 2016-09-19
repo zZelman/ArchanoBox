@@ -1,0 +1,4 @@
+#+Title: ArchanoBox
+#+AUTHOR: Kyle Avrett
+
+This is my first ever GitHub repository. It is a strategy video game with a 2D hexagon tile board and different types of units. Since this is my first repository from over 3 years ago, I did not use ANY best practices or conventions, I just wanted to create something, and this is what it turned out to be.
